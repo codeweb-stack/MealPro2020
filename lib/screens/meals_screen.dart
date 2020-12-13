@@ -1,3 +1,5 @@
+import 'package:MyMealsPro2020/data/dummy_data.dart';
+import 'package:MyMealsPro2020/widgets/card_meals.dart';
 import 'package:flutter/material.dart';
 
 class MealsScreen extends StatelessWidget {
@@ -12,35 +14,52 @@ class MealsScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     String title = args['title'];
-    int id = args['id'];
+    String id = args['id'];
     Color color = args['color'];
-    return Scaffold(
-      appBar: PreferredSize(
-        child: Card(
-          color: color,
-          margin: EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(16))),
-          child: Center(
-            child: Text(
-              title,
-              style: TextStyle(
+    final categoryMeals =
+        DUMMY_MEALS.where((meals) => meals.categories.contains(id)).toList();
+    return SafeArea(
+      child: Scaffold(
+          appBar: PreferredSize(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListTile(
+                leading: IconButton(
                   color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.remove_circle,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                title: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.normal),
+                ),
+                tileColor: color,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.elliptical(30, 60))),
+              ),
             ),
+            preferredSize: Size(MediaQuery.of(context).size.width, 80),
           ),
-        ),
-        preferredSize: Size(MediaQuery.of(context).size.width, 80),
-      ),
-      body: Center(
-        child: Text(
-          id.toString(),
-          style: TextStyle(color: Colors.grey, fontSize: 100),
-        ),
-      ),
+          body: ListView.builder(
+            itemBuilder: (context, index) {
+              return CardMeals(
+                id: categoryMeals[index].id,
+                imageUrl: categoryMeals[index].imageUrl,
+                title: categoryMeals[index].title,
+                affordability: categoryMeals[index].affordability,
+                durations: categoryMeals[index].duration,
+                complexity: categoryMeals[index].complexity,
+              );
+            },
+            itemCount: categoryMeals.length,
+          )),
     );
   }
 }

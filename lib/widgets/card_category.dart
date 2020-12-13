@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CardCategory extends StatelessWidget {
-  final int id;
+  final String id;
   final String title;
   final Color color;
 
