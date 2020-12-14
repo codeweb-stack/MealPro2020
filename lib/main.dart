@@ -1,6 +1,7 @@
 import 'package:MyMealsPro2020/screens/categories_screen.dart';
 import 'package:MyMealsPro2020/screens/meals_detail_screen.dart';
 import 'package:MyMealsPro2020/screens/meals_screen.dart';
+import 'package:MyMealsPro2020/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+        TabScreen.routeName: (ctx) => TabScreen(),
         CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
         MealsScreen.routeName: (ctx) => MealsScreen(),
         MealsDetailScreen.routeName: (ctx) => MealsDetailScreen()
